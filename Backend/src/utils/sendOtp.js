@@ -13,12 +13,11 @@ const sendOTP = async (email, otp) => {
 
     // ✅ Configure transporter (SMTP)
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,        
-      port: process.env.SMTP_PORT || 465, 
-      secure: true,                      
+      host: "smtp.gmail.com",        
+      port:  465,                      
       auth: {
-        user: process.env.SMTP_USER,     
-        pass: process.env.SMTP_PASS,     
+        user: "tanujarora1515@gmail.com",     
+        pass: "anbsxvrnxoqvujaz",     
       },
       logger: true,
       debug: true
