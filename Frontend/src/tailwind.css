@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@media print {
+  aside,
+  header,
+  .print\:hide {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+}
