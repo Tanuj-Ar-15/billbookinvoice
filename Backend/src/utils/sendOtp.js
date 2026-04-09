@@ -20,6 +20,8 @@ const sendOTP = async (email, otp) => {
         user: process.env.SMTP_USER,     
         pass: process.env.SMTP_PASS,     
       },
+      logger: true,
+      debug: true
     });
 
     // ✅ Email content
