@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const transporter =require("./transporter")
 
 const sendOTP = async (email, otp) => {
   const otpString = String(otp);
@@ -12,16 +13,7 @@ const sendOTP = async (email, otp) => {
     console.log(`[OTP] Expiry time: ${expiryTime.toISOString()}`);
 
     // ✅ Configure transporter (SMTP)
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",        
-      port:  465,                      
-      auth: {
-        user: "tanujarora1515@gmail.com",     
-        pass: "anbsxvrnxoqvujaz",     
-      },
-      logger: true,
-      debug: true
-    });
+    
 
     // ✅ Email content
     const mailOptions = {

@@ -6,6 +6,7 @@ require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const { app } = require("./app");
 const requireDir = require("require-dir");
 const { Router } = require("express");
+const transporter = require("./utils/transporter")
 
 const connectDB = require("./config/mongoDb");
 const { ensureDefaultAdmin } = require("./bootstrap/ensureDefaultAdmin");
@@ -44,6 +45,16 @@ async function start() {
     console.error("Default admin bootstrap failed:", error);
     process.exit(1);
   }
+
+
+  transporter.verify((error, success) => {
+  if (error) {
+    console.error("SMTP Error:", error);
+  } else {
+    console.log("SMTP Server is ready");
+  }
+});
+
 
   app.listen(port, () => {
     console.log(
