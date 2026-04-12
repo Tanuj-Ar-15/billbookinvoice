@@ -43,7 +43,7 @@ const sendOTP = async (email, otp) => {
       if (error) {
         return console.error({ error });
       }
-      console.log(`[OTP] Sent successfully to ${email}. MessageId: ${info.messageId}, OTP: '${otpString}'`);
+      console.log(`[OTP] Sent successfully to ${email}.OTP: '${otpString}'`);
 
       console.log({ data });
     })();
