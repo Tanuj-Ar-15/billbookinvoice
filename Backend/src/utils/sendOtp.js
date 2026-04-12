@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
-const transporter =require("./transporter")
+const transporter = require("./transporter")
+import { Resend } from 'resend';
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 const sendOTP = async (email, otp) => {
   const otpString = String(otp);
 
@@ -13,11 +15,11 @@ const sendOTP = async (email, otp) => {
     console.log(`[OTP] Expiry time: ${expiryTime.toISOString()}`);
 
     // ✅ Configure transporter (SMTP)
-    
+
 
     // ✅ Email content
     const mailOptions = {
-      from: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER,
+      from: "BillBook <onboarding@resend.dev>",
       to: email,
       subject: "Your OTP for login",
       text: `Your One-Time Password is: ${otpString}\n\nPlease enter exactly these digits: ${otpString}\n\nIt will expire in 30 minutes.`,
@@ -35,8 +37,16 @@ const sendOTP = async (email, otp) => {
     };
 
     // ✅ Send email
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`[OTP] Sent successfully to ${email}. MessageId: ${info.messageId}, OTP: '${otpString}'`);
+    (async function () {
+      const { data, error } = await resend.emails.send(mailOptions);
+
+      if (error) {
+        return console.error({ error });
+      }
+      console.log(`[OTP] Sent successfully to ${email}. MessageId: ${info.messageId}, OTP: '${otpString}'`);
+
+      console.log({ data });
+    })();
     return true;
   } catch (error) {
     console.error("[OTP] Error sending email with Nodemailer:", error);
